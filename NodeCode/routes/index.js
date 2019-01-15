@@ -9,7 +9,15 @@ router.get("/", (req, res) => {
   // res.send("Hey! It works!!!!!!!!");
   // res.json(tony); //sends json object instead of text
   // res.send(req.query.name);
-  res.json(req.query);
+  // res.json(req.query);
+  // res.render("hello"); //renders the 'hello.pug' file to the view
+  res.render("hello", {
+    name: "Tony",
+    dogs: ["Olive", "Betty"],
+    cat: req.query.cat,
+    age: 30,
+    cool: true
+  });
 });
 
 router.get("/reverse/:name", (req, res) => {
