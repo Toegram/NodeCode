@@ -69,6 +69,7 @@ app.use((req, res, next) => {
 
 // After allllll that above middleware, we finally handle our own routes!
 app.use("/", routes);
+// app.use("/posts", postsRoute); //custom routes written like so
 
 // If that above routes didnt work, we 404 them and forward to error handler
 app.use(errorHandlers.notFound);
