@@ -16,7 +16,8 @@ router.get("/", (req, res) => {
     dogs: ["Olive", "Betty"],
     cat: req.query.cat,
     age: 30,
-    cool: true
+    cool: true,
+    title: "Foodaholic"
   });
 });
 
