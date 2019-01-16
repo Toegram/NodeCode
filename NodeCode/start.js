@@ -11,6 +11,9 @@ mongoose.connection.on("error", err => {
   console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
 });
 
+//import all of our models
+require("./models/Store.js");
+
 // Start our app!
 const app = require("./app");
 app.set("port", process.env.PORT || 7777);
