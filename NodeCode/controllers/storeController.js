@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 const Store = mongoose.model("Store");
 
 exports.homePage = (req, res) => {
-  console.log(req.name);
+  //  FLASH LISTENERS:
+  // req.flash("info", "something happened!");
+  // req.flash("warning", "something happened!");
+  // req.flash("success", "something happened!");
+  // req.flash("error", "something happened!");
   res.render("index");
 };
 
@@ -12,9 +16,13 @@ exports.addStore = (req, res) => {
 
 exports.createStore = async (req, res) => {
   //'async' lets compiler know there will be an await
-  const store = new Store(req.body);
-  await store.save(); //'await' tells compiler to wait until this is finished before moving on
-  res.redirect("/");
+  const store = await new Store(req.body).save();
+  // await store.save(); //'await' tells compiler to wait until this is finished before moving on
+  req.flash(
+    "success",
+    `Successfully created ${store.name}! Care to leave a review?`
+  );
+  res.redirect(`/store/${store.slug}`);
 };
 
 // exports.myMiddleware = (req, res, next) => {
