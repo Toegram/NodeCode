@@ -2,11 +2,6 @@ const mongoose = require("mongoose");
 const Store = mongoose.model("Store");
 
 exports.homePage = (req, res) => {
-  //  FLASH LISTENERS:
-  // req.flash("info", "something happened!");
-  // req.flash("warning", "something happened!");
-  // req.flash("success", "something happened!");
-  // req.flash("error", "something happened!");
   res.render("index");
 };
 
@@ -25,11 +20,14 @@ exports.createStore = async (req, res) => {
   res.redirect(`/store/${store.slug}`);
 };
 
-// exports.myMiddleware = (req, res, next) => {
-//   req.name = "Tony";
-//   // res.cookie("name", "Tony Rulez", { maxAge: 1000 });
-//   if (req.name === "Tony") {
-//     throw Error("Fuck you, Tony");
-//   }
-//   next();
-// };
+exports.getStores = async (req, res) => {
+  //  queries DB for list of all stores
+  const stores = await Store.find();
+  res.render("stores", { title: "Stores", stores });
+};
+
+//  FLASH LISTENERS:
+// req.flash("info", "something happened!");
+// req.flash("warning", "something happened!");
+// req.flash("success", "something happened!");
+// req.flash("error", "something happened!");
