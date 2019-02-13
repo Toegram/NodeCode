@@ -14,11 +14,33 @@ const storeSchema = new mongoose.Schema({
     type: String,
     trim: true //removed white spacing auto-magically
   },
-  tags: [String] //Array of strings
+  tags: [String], //Array of strings
+  created: {
+    type: Date,
+    default: Date.now
+  },
+  location: {
+    type: {
+      type: String,
+      default: "Point"
+    },
+    coordinates: [
+      {
+        type: Number,
+        required: "You must supply coordinates"
+      }
+    ],
+    address: {
+      type: String,
+      required: "You must supply an address"
+    }
+  }
 });
 
-storeSchema.pre("save", function(next) { //before something is saved, do this
-  if (!this.isModified("name")) { //CAN NOT use arrow function because of 'this'
+storeSchema.pre("save", function(next) {
+  //before something is saved, do this
+  if (!this.isModified("name")) {
+    //CAN NOT use arrow function because of 'this'
     next(); //skip it
     return; //stops function from running if name is NOT changed
   }
