@@ -37,6 +37,7 @@ exports.editStore = async (req, res) => {
 
 exports.updateStore = async (req, res) => {
   //1. find the store
+  req.body.location.type = "Point";
   const store = await Store.findOneAndUpdate({ _id: req.params.id }, req.body, {
     new: true, //new:true will return the NEW store instead of the old storeController
     runValidators: true //forces model to RErun init validations
