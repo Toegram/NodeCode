@@ -26,6 +26,31 @@ exports.getStores = async (req, res) => {
   res.render("stores", { title: "Stores", stores });
 };
 
+exports.editStore = async (req, res) => {
+  //1. find the store base by ID
+  const store = await Store.findOne({ _id: req.params.id });
+  //2. confirm they are the owner of the store
+  //TODO
+  //3. render the editform
+  res.render("editStore", { title: `Edit ${store.name}`, store });
+};
+
+exports.updateStore = async (req, res) => {
+  //1. find the store
+  const store = await Store.findOneAndUpdate({ _id: req.params.id }, req.body, {
+    new: true, //new:true will return the NEW store instead of the old storeController
+    runValidators: true //forces model to RErun init validations
+  }).exec();
+  req.flash(
+    "success",
+    `Successfully updated <strong>${store.name}</strong> <a href="/stores/${
+      store.slug
+    }"> View Store -> </a>`
+  );
+  res.redirect(`/stores/${store._id}/edit`);
+  //redirect to store page
+};
+
 //  FLASH LISTENERS:
 // req.flash("info", "something happened!");
 // req.flash("warning", "something happened!");
