@@ -1122,7 +1122,7 @@ label {
 
 pre.error {
   padding: 5rem;
-  background: white;
+  background-image: linear-gradient(to bottom right, rgba(126, 126, 126, 0.2), rgba(0, 0, 0, 0));
   line-height: 3;
   white-space: pre-line; }
 
