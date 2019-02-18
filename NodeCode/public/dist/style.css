@@ -800,7 +800,7 @@ label {
       flex-wrap: wrap; }
 
 .tag {
-  display: block;
+  display: inline-block;
   margin-right: 1rem; }
   .tag__choice {
     display: -ms-flexbox;

@@ -38,7 +38,7 @@ const storeSchema = new mongoose.Schema({
   photo: String
 });
 
-storeSchema.pre("save", function(next) {
+storeSchema.pre("save", async function(next) {
   //before something is saved, do this
   if (!this.isModified("name")) {
     //CAN NOT use arrow function because of 'this'
@@ -47,9 +47,27 @@ storeSchema.pre("save", function(next) {
   }
 
   this.slug = slug(this.name);
+
+  //Regex find any slug that starts with this.slug and optionally ends with - 0-9
+  const slugRegex = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, "i");
+
+  const storesWithSlug = await this.constructor.find({ slug: slugRegex });
   next();
+
+  //Sets slug to slug + - + incrementing number
+  if (storesWithSlug.length) {
+    this.slug = `${this.slug}-${storesWithSlug.length + 1}`;
+  }
 
   //TODO: make sure slugs unique
 });
+
+storeSchema.statics.getTagsList = function() {
+  return this.aggregate([
+    { $unwind: "$tags" },
+    { $group: { _id: "$tags", count: { $sum: 1 } } },
+    { $sort: { count: -1 } }
+  ]);
+};
 
 module.exports = mongoose.model("Store", storeSchema);

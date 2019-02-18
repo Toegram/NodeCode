@@ -91,6 +91,12 @@ exports.updateStore = async (req, res) => {
   //redirect to store page
 };
 
+exports.getStoresByTag = async (req, res) => {
+  const tags = await Store.getTagsList();
+  const tag = req.params.tag;
+  res.render(`tags`, { tags, title: "Tags", tag });
+};
+
 //  FLASH LISTENERS:
 // req.flash("info", "something happened!");
 // req.flash("warning", "something happened!");
