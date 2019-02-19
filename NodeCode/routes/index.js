@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const storeController = require("../controllers/storeController.js");
+const userController = require("../controllers/userController.js");
 
 const { catchErrors } = require("../handlers/errorHandlers.js");
 
@@ -26,6 +27,8 @@ router.post(
 );
 
 router.get("/stores/:id/edit", catchErrors(storeController.editStore));
+
+router.get("/login", userController.loginForm);
 
 module.exports = router;
 
