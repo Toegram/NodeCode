@@ -45,6 +45,5 @@ exports.register = async (req, res, next) => {
   });
   const register = promisify(User.register, User); // if passing a method that lives on an object, promisift ALSO needs the original object to bind it to
   await register(user, req.body.password);
-  res.send("it works!");
   next();
 };
