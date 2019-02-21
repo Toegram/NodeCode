@@ -34,7 +34,12 @@ router.get("/register", userController.registerForm);
 //1. validate registration data
 //2. register the user
 //3. log the user in
-router.post("/register", userController.validateRegister);
+router.post(
+  "/register",
+  userController.validateRegister,
+  userController.register
+  authController.login
+);
 
 module.exports = router;
 
